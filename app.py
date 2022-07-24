@@ -18,10 +18,8 @@ app= Flask(__name__)
 sintomas = [ ]
 
 @app.route("/")
-def home():
-    
-    
-    return jsonify(sintomas)
+def home():   
+    return "La pagina esta funcionando bien"
 
 @app.route("/predecir", methods=["POST"])
 def predecir():
