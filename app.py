@@ -9,7 +9,6 @@ from flask import Flask, jsonify, request
 import sklearn.externals
 import json
 import joblib
-import numpy as np
 import sklearn
 
 #curl -d "{\"Sintomas\":[[30,1,5,1,1,2,1,0,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0]]}" -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/predecir
