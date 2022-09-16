@@ -1,3 +1,5 @@
+tensorflow
+keras
 Flask
 Flask-Cors
 numpy
@@ -6,4 +8,11 @@ scikit-image
 scikit-learn
 scipy
 gunicorn
+
+
+
+
+
+
+
 

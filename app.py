@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Jun 24 15:27:56 2022
+Created on Wed Sep  7 20:35:14 2022
 
 @author: Guille
 """
 
+import numpy as np
+from keras.models import load_model
+from tensorflow import keras
 from flask import Flask, jsonify, request
+import time,os
 import sklearn.externals
 import json
 import joblib
@@ -14,40 +18,43 @@ import sklearn
 from flask_cors import CORS, cross_origin
 
 
+# Load the model
+model = load_model('modelo_entrenado.h5')
 
-#curl -d "{\"Sintomas\":[[30,1,5,1,1,2,1,0,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0]]}" -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/predecir
+def pre_process(arr):
+    return np.argmax(model.predict(arr), axis=-1)[0]
 
-app= Flask(__name__)
+
+app = Flask(__name__)
+
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-
 sintomas = [ ]
 
+# Create a method for /
 @app.route("/")
-@cross_origin()
 def home():
-    
-    
-    return jsonify(sintomas)
+    return "<h1>Servicio iniciado RNA2!</h1>"
 
-@app.route("/predecir", methods=["POST"])
-@cross_origin()
-def predecir():
+@app.route('/predict',methods=['POST'])
+def predict_():
+    
     reqsintomas=request.get_json(force=True)
     print(reqsintomas)
     sintomas=reqsintomas['Sintomas']
     print(sintomas)
-    clf=joblib.load('modelo_entrenado.pkl')
-    prediccion=clf.predict(sintomas)
-    print(str(prediccion[0]))
-    
+
+ 
+    digit_class = pre_process(sintomas)  
+
+  
     res ={
-        "descr":sintomas,
-        "pred":str(prediccion[0])
-        }
+        "pred":int(digit_class))
+    }
     
-    #return "prediccion "+str(prediccion[0])
+   
+  
     return jsonify(res)
 
 
