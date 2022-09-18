@@ -5,16 +5,14 @@ Created on Wed Sep  7 20:35:14 2022
 @author: Guille
 """
 
-import numpy as np
+
 from keras.models import load_model
-from tensorflow import keras
+
 from flask import Flask, jsonify, request
-import time,os
-import sklearn.externals
-import json
-import joblib
+
+
 import numpy as np
-import sklearn
+
 from flask_cors import CORS, cross_origin
 
 
@@ -50,7 +48,7 @@ def predict_():
 
   
     res ={
-        "pred":int(digit_class))
+        "pred":int(digit_class)   
     }
     
    
